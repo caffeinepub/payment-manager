@@ -1,0 +1,89 @@
+{
+  "kind": "coverage_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-12T13:17:15.175Z",
+  "sources": {
+    "buildRequest": true,
+    "implementationPlan": true
+  },
+  "requirements": {
+    "total": 3,
+    "implemented": 2,
+    "items": [
+      {
+        "id": "REQ-1",
+        "summary": "Resolve the build error caused by missing imports under `@/components/ui/*` by replacing all such imports across the frontend with imports from a new, non-immutable local UI kit directory (for example `@/components/ui-kit/*`).",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/App.tsx",
+          "frontend/src/components/layout/AppShell.tsx",
+          "frontend/src/pages/TransactionsPage.tsx",
+          "frontend/src/pages/TransactionDetailPage.tsx",
+          "frontend/src/pages/PeoplePage.tsx",
+          "frontend/src/pages/VendorsPage.tsx",
+          "frontend/src/pages/BalancesPage.tsx",
+          "frontend/src/components/transactions/TransactionFormDialog.tsx",
+          "frontend/src/components/transactions/SplitEditor.tsx",
+          "frontend/src/components/people/PersonCard.tsx",
+          "frontend/src/components/people/PersonFormDialog.tsx",
+          "frontend/src/components/people/DeletePersonGuard.tsx",
+          "frontend/src/components/vendors/VendorCard.tsx",
+          "frontend/src/components/vendors/VendorFormDialog.tsx",
+          "frontend/src/components/vendors/DeleteVendorGuard.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/App.tsx",
+          "frontend/src/pages/PeoplePage.tsx",
+          "frontend/src/components/transactions/SplitEditor.tsx",
+          "frontend/src/components/people/PersonCard.tsx"
+        ]
+      },
+      {
+        "id": "REQ-2",
+        "summary": "Create the missing UI component implementations in the new UI kit directory to match the APIs currently used by the app: `button`, `card`, `badge`, `alert`, `dialog`, `alert-dialog`, `input`, `label`, `textarea`, `select`, and `radio-group` (including the subcomponents referenced in the code, such as `CardHeader`, `DialogContent`, `SelectItem`, etc.).",
+        "status": "missing",
+        "plannedFiles": [
+          "frontend/src/components/ui-kit/utils.ts",
+          "frontend/src/components/ui-kit/button.tsx",
+          "frontend/src/components/ui-kit/card.tsx",
+          "frontend/src/components/ui-kit/badge.tsx",
+          "frontend/src/components/ui-kit/alert.tsx",
+          "frontend/src/components/ui-kit/dialog.tsx",
+          "frontend/src/components/ui-kit/alert-dialog.tsx",
+          "frontend/src/components/ui-kit/input.tsx",
+          "frontend/src/components/ui-kit/label.tsx",
+          "frontend/src/components/ui-kit/textarea.tsx",
+          "frontend/src/components/ui-kit/select.tsx",
+          "frontend/src/components/ui-kit/radio-group.tsx"
+        ],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-3",
+        "summary": "Remove the dependency on the missing `@/components/ui/sonner` wrapper by switching to a working Toaster import and usage, ensuring toast notifications continue to display (the app currently calls `toast.success`/`toast.error`).",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/App.tsx"
+        ]
+      }
+    ]
+  },
+  "changedFiles": [
+    "build-request.json",
+    "feature_evidence.json",
+    "frontend-file-summaries.txt",
+    "frontend-implementation-plan.json",
+    "frontend/src/App.tsx",
+    "frontend/src/components/people/PersonCard.tsx",
+    "frontend/src/components/transactions/ReceiptAttachments.tsx",
+    "frontend/src/components/transactions/SplitEditor.tsx",
+    "frontend/src/pages/PeoplePage.tsx",
+    "project_state.json",
+    "scratch/component-selection.json",
+    "spec.md",
+    "spec_vs_diff_report.json"
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "Payment Manager project (frontend) with UI components imported via @/components/ui/* alias.",
+  "architectural_notes": [
+    "Frontend uses path alias @/ (e.g., @/components/ui/*) for shared UI components."
+  ],
+  "known_issues": [
+    "Build fails due to missing UI components directory: unresolved imports for @/components/ui/{sonner,button,card,badge,alert-dialog,dialog,input,label,textarea,select,radio-group,alert}."
+  ],
+  "isFixRequest": true,
+  "existing_features": [
+    {
+      "id": "feature-resolve-the-build-error-caused-by-missing-imports-under-components-ui-by-replacing-all-such-imports-across-the-frontend-with-imports-from-a-new-non-immutable-local-ui-kit-directory-for-example-components-ui-kit",
+      "title": "Resolve the build error caused by missing imports under `@/components/ui/*` by replacing all such imports across the frontend with imports from a new, non-immutable local UI kit directory (for example `@/components/ui-kit/*`).",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-remove-the-dependency-on-the-missing-components-ui-sonner-wrapper-by-switching-to-a-working-toaster-import-and-usage-ensuring-toast-notifications-continue-to-display-the-app-currently-calls-toast-success-toast-error",
+      "title": "Remove the dependency on the missing `@/components/ui/sonner` wrapper by switching to a working Toaster import and usage, ensuring toast notifications continue to display (the app currently calls `toast.success`/`toast.error`).",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-2",
+      "summary": "Create the missing UI component implementations in the new UI kit directory to match the APIs currently used by the app: `button`, `card`, `badge`, `alert`, `dialog`, `alert-dialog`, `input`, `label`, `textarea`, `select`, and `radio-group` (including the subcomponents referenced in the code, such as `CardHeader`, `DialogContent`, `SelectItem`, etc.).",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "status": "pending"
+    }
+  ],
+  "projectName": "payment-manager",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

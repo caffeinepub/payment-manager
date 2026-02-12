@@ -1,0 +1,82 @@
+{
+  "kind": "build_request",
+  "title": "Fix missing Shadcn UI imports by adding a local UI kit and updating all @/components/ui/* references",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Resolve the build error caused by missing imports under `@/components/ui/*` by replacing all such imports across the frontend with imports from a new, non-immutable local UI kit directory (for example `@/components/ui-kit/*`).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "There seems to be a missing ui directory.\nError: The following dependencies are imported but could not be resolved:\n\n  @/components/ui/sonner ...\n  @/components/ui/button ...\n  @/components/ui/card ...\n  @/components/ui/badge ...\n  @/components/ui/alert-dialog ...\n  @/components/ui/dialog ...\n  @/components/ui/input ...\n  @/components/ui/label ...\n  @/components/ui/textarea ...\n  @/components/ui/select ...\n  @/components/ui/radio-group ...\n  @/components/ui/alert ..."
+        ]
+      },
+      "acceptanceCriteria": [
+        "No source file in `frontend/src` imports from `@/components/ui/*` anymore.",
+        "The app compiles without unresolved-import errors for UI components.",
+        "All updated imports use a consistent new prefix (e.g. `@/components/ui-kit/...`)."
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Create the missing UI component implementations in the new UI kit directory to match the APIs currently used by the app: `button`, `card`, `badge`, `alert`, `dialog`, `alert-dialog`, `input`, `label`, `textarea`, `select`, and `radio-group` (including the subcomponents referenced in the code, such as `CardHeader`, `DialogContent`, `SelectItem`, etc.).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "@/components/ui/button",
+          "@/components/ui/card",
+          "@/components/ui/badge",
+          "@/components/ui/alert-dialog",
+          "@/components/ui/dialog",
+          "@/components/ui/input",
+          "@/components/ui/label",
+          "@/components/ui/textarea",
+          "@/components/ui/select",
+          "@/components/ui/radio-group",
+          "@/components/ui/alert"
+        ]
+      },
+      "acceptanceCriteria": [
+        "All pages/components that previously depended on Shadcn-style UI primitives render without runtime crashes.",
+        "The newly added UI components provide the specific exports used in files like `frontend/src/components/transactions/TransactionFormDialog.tsx`, `frontend/src/components/vendors/DeleteVendorGuard.tsx`, and `frontend/src/pages/TransactionsPage.tsx` (e.g. `Dialog`, `DialogContent`, `AlertDialogAction`, `SelectTrigger`, `RadioGroupItem`, etc.).",
+        "UI components apply Tailwind classes so existing className usage in the app continues to produce a usable layout in both light and dark mode."
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Remove the dependency on the missing `@/components/ui/sonner` wrapper by switching to a working Toaster import and usage, ensuring toast notifications continue to display (the app currently calls `toast.success`/`toast.error`).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "@/components/ui/sonner (imported by /home/sankalp/Desktop/code/projects/payment-manager/frontend/src/App.tsx)"
+        ]
+      },
+      "acceptanceCriteria": [
+        "`frontend/src/App.tsx` no longer imports `@/components/ui/sonner`.",
+        "A toaster is mounted once at the app root, and existing calls like `toast.success('...')` still display notifications."
+      ]
+    }
+  ],
+  "constraints": [
+    "Do not edit anything under `frontend/src/components/ui` (it is an immutable/read-only path in this environment).",
+    "Use English for any user-facing text."
+  ],
+  "nonGoals": [
+    "Implementing or changing backend (Motoko) functionality.",
+    "Redesigning app screens or changing business logic; only fix missing UI primitives/imports to restore a working build."
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  }
+}

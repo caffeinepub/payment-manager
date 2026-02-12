@@ -1,0 +1,179 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Add local UI kit and replace missing shadcn/ui imports to restore frontend build",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "summary": "Replace all `@/components/ui/*` imports in `frontend/src` with imports from a new local UI kit prefix (e.g. `@/components/ui-kit/*`) without touching the immutable `frontend/src/components/ui` path.",
+      "acceptanceCriteria": [
+        "No source file in `frontend/src` imports from `@/components/ui/*` anymore.",
+        "The app compiles without unresolved-import errors for UI components.",
+        "All updated imports use a consistent new prefix (e.g. `@/components/ui-kit/...`)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Replace the `@/components/ui/sonner` import and any other `@/components/ui/*` imports with the new `@/components/ui-kit/*` prefix where applicable. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/layout/AppShell.tsx",
+          "operation": "modify",
+          "description": "Update `Button` import from `@/components/ui/button` to `@/components/ui-kit/button` to remove all `@/components/ui/*` references. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/TransactionsPage.tsx",
+          "operation": "modify",
+          "description": "Update imports for `Button`, `Card` (and subcomponents), and `Badge` from `@/components/ui/*` to `@/components/ui-kit/*`. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/TransactionDetailPage.tsx",
+          "operation": "modify",
+          "description": "Update imports for `Button`, `Card` (and subcomponents), `Badge`, and `AlertDialog` (and subcomponents) from `@/components/ui/*` to `@/components/ui-kit/*`. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/PeoplePage.tsx",
+          "operation": "modify",
+          "description": "Update imports for `Button` and `Card` (and subcomponents) from `@/components/ui/*` to `@/components/ui-kit/*`. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/VendorsPage.tsx",
+          "operation": "modify",
+          "description": "Update imports for `Button` and `Card` (and subcomponents) from `@/components/ui/*` to `@/components/ui-kit/*`. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/BalancesPage.tsx",
+          "operation": "modify",
+          "description": "Update imports for `Card` (and subcomponents) from `@/components/ui/card` to `@/components/ui-kit/card`. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/transactions/TransactionFormDialog.tsx",
+          "operation": "modify",
+          "description": "Update imports for `Dialog` (and subcomponents), `Button`, `Input`, `Label`, `Textarea`, `Select` (and subcomponents), and `RadioGroup` (and subcomponents) from `@/components/ui/*` to `@/components/ui-kit/*`. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/transactions/SplitEditor.tsx",
+          "operation": "modify",
+          "description": "Update imports for `Button`, `Input`, `Label`, and `Select` (and subcomponents) from `@/components/ui/*` to `@/components/ui-kit/*`. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/people/PersonCard.tsx",
+          "operation": "modify",
+          "description": "Update imports for `Card` (and subcomponents) and `Button` from `@/components/ui/*` to `@/components/ui-kit/*`. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/people/PersonFormDialog.tsx",
+          "operation": "modify",
+          "description": "Update imports for `Dialog` (and subcomponents), `Button`, `Input`, `Label`, and `Textarea` from `@/components/ui/*` to `@/components/ui-kit/*`. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/people/DeletePersonGuard.tsx",
+          "operation": "modify",
+          "description": "Update imports for `AlertDialog` (and subcomponents) and `Alert` (and subcomponents) from `@/components/ui/*` to `@/components/ui-kit/*`. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/vendors/VendorCard.tsx",
+          "operation": "modify",
+          "description": "Update imports for `Card` (and subcomponents), `Button`, and `Badge` from `@/components/ui/*` to `@/components/ui-kit/*`. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/vendors/VendorFormDialog.tsx",
+          "operation": "modify",
+          "description": "Update imports for `Dialog` (and subcomponents), `Button`, `Input`, `Label`, and `Textarea` from `@/components/ui/*` to `@/components/ui-kit/*`. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/vendors/DeleteVendorGuard.tsx",
+          "operation": "modify",
+          "description": "Update imports for `AlertDialog` (and subcomponents) and `Alert` (and subcomponents) from `@/components/ui/*` to `@/components/ui-kit/*`. Verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "summary": "Implement a local, non-immutable UI kit that provides the same exports and subcomponents currently used by the app for button/card/badge/alert/dialog/alert-dialog/input/label/textarea/select/radio-group with Tailwind styling supporting light/dark mode.",
+      "acceptanceCriteria": [
+        "All pages/components that previously depended on Shadcn-style UI primitives render without runtime crashes.",
+        "The newly added UI components provide the specific exports used in files like `frontend/src/components/transactions/TransactionFormDialog.tsx`, `frontend/src/components/vendors/DeleteVendorGuard.tsx`, and `frontend/src/pages/TransactionsPage.tsx` (e.g. `Dialog`, `DialogContent`, `AlertDialogAction`, `SelectTrigger`, `RadioGroupItem`, etc.).",
+        "UI components apply Tailwind classes so existing className usage in the app continues to produce a usable layout in both light and dark mode."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/ui-kit/utils.ts",
+          "operation": "create",
+          "description": "Add shared UI-kit utilities (e.g., a `cn(...)` className combiner) used across UI primitives to match shadcn-style ergonomics while keeping Tailwind class composition intact. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/ui-kit/button.tsx",
+          "operation": "create",
+          "description": "Create `Button` with shadcn-like props (`variant`, `size`, `asChild`-style compatibility if needed) and Tailwind classes compatible with existing usages across pages/dialogs. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/ui-kit/card.tsx",
+          "operation": "create",
+          "description": "Create `Card` and subcomponents `CardHeader`, `CardTitle`, `CardDescription`, `CardContent`, `CardFooter` with Tailwind styling consistent with current layout usage. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/ui-kit/badge.tsx",
+          "operation": "create",
+          "description": "Create `Badge` with `variant` support (at least `default` and `secondary`) to match current usage and Tailwind theme variables. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/ui-kit/alert.tsx",
+          "operation": "create",
+          "description": "Create `Alert` and `AlertDescription` (and `AlertTitle` if helpful) with a `variant` option (including `destructive`) to match current guards and error states. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/ui-kit/dialog.tsx",
+          "operation": "create",
+          "description": "Create `Dialog` primitives and exports used by the app (`Dialog`, `DialogContent`, `DialogHeader`, `DialogTitle`, `DialogDescription`, `DialogFooter`) with accessible structure and Tailwind classes so existing dialog pages render correctly. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/ui-kit/alert-dialog.tsx",
+          "operation": "create",
+          "description": "Create `AlertDialog` primitives and exports used by the app (`AlertDialog`, `AlertDialogContent`, `AlertDialogHeader`, `AlertDialogTitle`, `AlertDialogDescription`, `AlertDialogFooter`, `AlertDialogAction`, `AlertDialogCancel`) with Tailwind styling and compatible props. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/ui-kit/input.tsx",
+          "operation": "create",
+          "description": "Create `Input` as a styled input primitive (supports `type`, `required`, `min`, `step`, etc.) and forwards refs/props as needed by existing forms. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/ui-kit/label.tsx",
+          "operation": "create",
+          "description": "Create `Label` as a styled label primitive supporting `htmlFor` and className merging consistent with current form usage. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/ui-kit/textarea.tsx",
+          "operation": "create",
+          "description": "Create `Textarea` as a styled textarea primitive supporting `rows`, value/onChange, and className merging used in person/vendor/transaction forms. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/ui-kit/select.tsx",
+          "operation": "create",
+          "description": "Create `Select` primitives and exports used by the app (`Select`, `SelectTrigger`, `SelectValue`, `SelectContent`, `SelectItem`) to support the current controlled `value`/`onValueChange` patterns with Tailwind styling. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/ui-kit/radio-group.tsx",
+          "operation": "create",
+          "description": "Create `RadioGroup` and `RadioGroupItem` exports to support controlled selection (`value`/`onValueChange`) as used in the transaction type selector with Tailwind styling. Verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Remove the missing `@/components/ui/sonner` wrapper and mount a working toaster once at the app root while keeping existing `toast.success`/`toast.error` calls functional.",
+      "acceptanceCriteria": [
+        "`frontend/src/App.tsx` no longer imports `@/components/ui/sonner`.",
+        "A toaster is mounted once at the app root, and existing calls like `toast.success('...')` still display notifications."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Replace `import { Toaster } from '@/components/ui/sonner'` with a working `Toaster` import (e.g., from `sonner`) and keep a single `<Toaster />` mounted under the app root so existing `toast.success`/`toast.error` calls continue to work. Verify the component's usage instructions before implementing."
+        }
+      ]
+    }
+  ]
+}

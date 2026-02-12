@@ -1,0 +1,44 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-resolve-the-build-error-caused-by-missing-imports-under-components-ui-by-replacing-all-such-imports-across-the-frontend-with-imports-from-a-new-non-immutable-local-ui-kit-directory-for-example-components-ui-kit",
+      "featureTitle": "Resolve the build error caused by missing imports under `@/components/ui/*` by replacing all such imports across the frontend with imports from a new, non-immutable local UI kit directory (for example `@/components/ui-kit/*`).",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/people/PersonCard.tsx",
+        "frontend/src/components/transactions/SplitEditor.tsx",
+        "frontend/src/pages/PeoplePage.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-remove-the-dependency-on-the-missing-components-ui-sonner-wrapper-by-switching-to-a-working-toaster-import-and-usage-ensuring-toast-notifications-continue-to-display-the-app-currently-calls-toast-success-toast-error",
+      "featureTitle": "Remove the dependency on the missing `@/components/ui/sonner` wrapper by switching to a working Toaster import and usage, ensuring toast notifications continue to display (the app currently calls `toast.success`/`toast.error`).",
+      "files": [
+        "frontend/src/App.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

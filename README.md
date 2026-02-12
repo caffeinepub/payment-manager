@@ -1,2 +1,3 @@
-# payment-manager
-Exported from Caffeine project: payment-manager
+## 
+
+To run app build and run docker image: `docker build -t app . docker run -it --network host app`
